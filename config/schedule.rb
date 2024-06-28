@@ -24,6 +24,11 @@ set :environment, 'development'
 # Define el path a tu aplicación
 set :output, "#{path}/log/cron.log"
 
-every 1.day, at: '12:00 am' do
-  rake 'backup:export_pacientes'
+# every 1.day, at: '12:00 am' do
+#   rake 'backup:export_'
+# end
+
+
+every 2.minutes do
+  rake 'backup:export_all'
 end

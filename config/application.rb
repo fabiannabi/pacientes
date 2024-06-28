@@ -32,5 +32,4 @@ module Registry
       end
     end
   end
-
 end

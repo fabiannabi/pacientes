@@ -13,8 +13,16 @@ class PacientesController < ApplicationController
   end
 
   # POST /pacientes
-  def create
+ def create
+  debugger
     @paciente = Paciente.new(paciente_params)
+    # Validación adicional para asegurar que 'edad' sea un número
+    # Validación adicional para asegurar que 'fecha_nacimiento' sea una fecha válida
+    begin
+      Date.parse(params[:fecha_nacimiento])
+    rescue ArgumentError
+      return render json: { error: 'Fecha de nacimiento no válida' }, status: :unprocessable_entity
+    end
 
     if @paciente.save
       render json: @paciente, status: :created, location: @paciente
@@ -45,6 +53,6 @@ class PacientesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def paciente_params
-      params.require(:paciente).permit(:nombre, :edad, :sexo)
+      params.require(:paciente).permit(:nombre, :edad, :sexo, :apellido, :estado_civil, :grado_estudios, :ocupacion, :domicilio, :fecha_nacimiento, :procedencia)
     end
 end
